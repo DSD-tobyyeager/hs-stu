@@ -50,4 +50,4 @@ $AutopilotOOBEJson = @'
     "Title":  "OSDeploy Autopilot Registration"
 }
 '@
-$AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.AutopilotOOBE.json
+$AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.AutopilotOOBE.json"
