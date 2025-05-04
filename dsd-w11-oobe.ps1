@@ -75,3 +75,26 @@ If (!(Test-Path "C:\ProgramData\OSDeploy")) {
     New-Item "C:\ProgramData\OSDeploy" -ItemType Directory -Force | Out-Null
 }
 $OOBEDeployJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.OOBEDeploy.json" -Encoding ascii -Force
+    $AutopilotOOBEJson = @"
+    {
+        "Assign":  {
+                        "IsPresent":  true
+                    },
+        "GroupTag":  "hsstudent",
+        "Hidden":  [
+                        "AssignedComputerName",
+                        "AddToGroup",
+                        "AssignedUser",
+                        "PostAction",
+                        "Assign"
+                    ],
+        "PostAction":  "Restart",
+        "Run":  "NetworkingWireless",
+        "Docs":  "https://google.com/",
+        "Title":  "Manual Autopilot Register"
+    }
+"@
+If (!(Test-Path "C:\ProgramData\OSDeploy")) {
+        New-Item "C:\ProgramData\OSDeploy" -ItemType Directory -Force | Out-Null
+    }
+$AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.AutopilotOOBE.json" -Encoding ascii -Force
