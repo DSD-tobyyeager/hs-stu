@@ -28,26 +28,11 @@ Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation
 #=======================================================================
 #   PostOS: AutopilotOOBE Staging
 #=======================================================================
-$AutopilotOOBEJson = @'
-{
-    "Assign":  {
-                   "IsPresent":  true
-               },
-    "GroupTag":  "hsstudent",
-    "GroupTagOptions":  [
-                            "hsstudent",
-                            "faculty"
-                        ],
-    "Hidden":  [
-                   "AddToGroup",
-                   "AssignedComputerName",
-                   "AssignedUser",
-                   "PostAction"
-               ],
-    "PostAction":  "Shutdown",
-    "Run":  "NetworkingWireless",
-    "Docs":  "https://autopilotoobe.osdeploy.com/",
-    "Title":  "OSDeploy Autopilot Registration"
+$AutopilotParams = @{
+    Online = $true
+    TenantId = ''
+    AppId = ''
+    AppSecret = ''
+    GroupTag = 'hsstudent'
 }
-'@
-$AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.AutopilotOOBE.json"
+Get-WindowsAutoPilotInfo @AutopilotParams
