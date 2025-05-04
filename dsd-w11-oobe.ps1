@@ -33,7 +33,7 @@ $AutopilotOOBEJson = @'
     "Assign":  {
                    "IsPresent":  true
                },
-    "GroupTag":  "Enterprise",
+    "GroupTag":  "hsstudent",
     "GroupTagOptions":  [
                             "hsstudent",
                             "faculty"
