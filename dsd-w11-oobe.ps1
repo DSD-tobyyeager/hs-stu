@@ -25,14 +25,53 @@ write-host "Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $
 
 Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation -OSLanguage $OSLanguage -Shutdown -ZTI
 
-#=======================================================================
-#   PostOS: AutopilotOOBE Staging
-#=======================================================================
-$AutopilotParams = @{
-    Online = $true
-    TenantId = ''
-    AppId = ''
-    AppSecret = ''
-    GroupTag = 'hsstudent'
+# OOBEDeploy
+$OOBEDeployJson = @'
+{
+    "AddNetFX3":  {
+                      "IsPresent":  true
+                  },
+    "Autopilot":  {
+                      "IsPresent":  false
+                  },
+    "RemoveAppx":  [
+                    "MicrosoftTeams",
+                    "Microsoft.BingWeather",
+                    "Microsoft.BingNews",
+                    "Microsoft.GamingApp",
+                    "Microsoft.GetHelp",
+                    "Microsoft.Getstarted",
+                    "Microsoft.Messaging",
+                    "Microsoft.MicrosoftOfficeHub",
+                    "Microsoft.MicrosoftSolitaireCollection",
+                    "Microsoft.MicrosoftStickyNotes",
+                    "Microsoft.MSPaint",
+                    "Microsoft.People",
+                    "Microsoft.PowerAutomateDesktop",
+                    "Microsoft.StorePurchaseApp",
+                    "Microsoft.Todos",
+                    "microsoft.windowscommunicationsapps",
+                    "Microsoft.WindowsFeedbackHub",
+                    "Microsoft.WindowsMaps",
+                    "Microsoft.WindowsSoundRecorder",
+                    "Microsoft.Xbox.TCUI",
+                    "Microsoft.XboxGameOverlay",
+                    "Microsoft.XboxGamingOverlay",
+                    "Microsoft.XboxIdentityProvider",
+                    "Microsoft.XboxSpeechToTextOverlay",
+                    "Microsoft.YourPhone",
+                    "Microsoft.ZuneMusic",
+                    "Microsoft.ZuneVideo"
+                   ],
+    "UpdateDrivers":  {
+                          "IsPresent":  true
+                      },
+    "UpdateWindows":  {
+                          "IsPresent":  true
+                      }
 }
-Get-WindowsAutoPilotInfo @AutopilotParams
+'@
+If (!(Test-Path "C:\ProgramData\OSDeploy")) {
+    New-Item "C:\ProgramData\OSDeploy" -ItemType Directory -Force | Out-Null
+}
+$OOBEDeployJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.OOBEDeploy.json" -Encoding ascii -Force
