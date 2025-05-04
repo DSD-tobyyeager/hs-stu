@@ -75,7 +75,7 @@ If (!(Test-Path "C:\ProgramData\OSDeploy")) {
     New-Item "C:\ProgramData\OSDeploy" -ItemType Directory -Force | Out-Null
 }
 $OOBEDeployJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.OOBEDeploy.json" -Encoding ascii -Force
-    $AutopilotOOBEJson = @"
+$AutopilotOOBEJson = @"
     {
         "Assign":  {
                         "IsPresent":  true
