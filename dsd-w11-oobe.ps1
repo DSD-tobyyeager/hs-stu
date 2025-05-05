@@ -31,6 +31,8 @@ $OOBEDeployJson = @'
     "AddNetFX3":  {
                       "IsPresent":  true
                   },
+    "SetEdition":  "Enterprise",
+    
     "Autopilot":  {
                       "IsPresent":  true
                   },
@@ -67,7 +69,7 @@ $OOBEDeployJson = @'
                           "IsPresent":  true
                       },
     "UpdateWindows":  {
-                          "IsPresent":  true
+                          "IsPresent":  false
                       }
 }
 '@
