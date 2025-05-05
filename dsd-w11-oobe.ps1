@@ -1,7 +1,7 @@
 #Variables to define the Windows OS / Edition etc to be applied during OSDCloud
 $OSName = 'Windows 11 23H2 x64'
 $OSEdition = 'Pro'
-$OSActivation = 'Volume'
+$OSActivation = 'Retail'
 $OSLanguage = 'en-us'
 
 #Set OSDCloud Vars
@@ -23,7 +23,7 @@ $Global:MyOSDCloud = [ordered]@{
 Write-Host "Starting OSDCloud" -ForegroundColor Green
 write-host "Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation -OSLanguage $OSLanguage"
 
-Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation -OSLanguage $OSLanguage -Shutdown -ZTI
+Start-OSDCloud -OSName $OSName -OSEdition $OSEdition -OSActivation $OSActivation -OSLanguage $OSLanguage -ZTI -Firmw
 
 # OOBEDeploy
 $OOBEDeployJson = @'
@@ -82,13 +82,11 @@ $AutopilotOOBEJson = @"
                     },
         "GroupTag":  "hsstudent",
         "Hidden":  [
-                        "AssignedComputerName",
                         "AddToGroup",
                         "AssignedUser",
-                        "PostAction",
                         "Assign"
                     ],
-        "PostAction":  "Restart",
+        "PostAction":  "Quit",
         "Run":  "NetworkingWireless",
         "Docs":  "https://google.com/",
         "Title":  "Manual Autopilot Register"
