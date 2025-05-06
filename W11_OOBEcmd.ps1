@@ -17,12 +17,12 @@ Import-Module OSD -Force
 #=======================================================================
 $Params = @{
     OSVersion = "Windows 11"
-    OSBuild = "22H2"
+    OSBuild = "24H2"
     OSEdition = "Pro"
     OSLanguage = "en-us"
     OSLicense = "Retail"
     ZTI = $true
-    Firmware = $false
+    Firmware = $true
 }
 Start-OSDCloud @Params
 
@@ -36,12 +36,13 @@ $OOBEDeployJson = @'
                       "IsPresent":  true
                   },
     "Autopilot":  {
-                      "IsPresent":  false
+                      "IsPresent":  true
                   },
     "RemoveAppx":  [
                     "MicrosoftTeams",
                     "Microsoft.BingWeather",
                     "Microsoft.BingNews",
+                    "Microsoft.DevHome",
                     "Microsoft.GamingApp",
                     "Microsoft.GetHelp",
                     "Microsoft.Getstarted",
@@ -70,6 +71,7 @@ $OOBEDeployJson = @'
     "UpdateDrivers":  {
                           "IsPresent":  true
                       },
+    "SetEdition":  "Enterprise",
     "UpdateWindows":  {
                           "IsPresent":  true
                       }
@@ -87,7 +89,7 @@ Write-Host -ForegroundColor Green "Define Computername:"
 $Serial = Get-WmiObject Win32_bios | Select-Object -ExpandProperty SerialNumber
 $TargetComputername = $Serial.Substring(4,3)
 
-$AssignedComputerName = "AkosCloud-$TargetComputername"
+$AssignedComputerName = "ap-$Serial"
 Write-Host -ForegroundColor Red $AssignedComputerName
 Write-Host ""
 
@@ -95,11 +97,10 @@ Write-Host -ForegroundColor Green "Create C:\ProgramData\OSDeploy\OSDeploy.Autop
 $AutopilotOOBEJson = @"
 {
     "AssignedComputerName" : "$AssignedComputerName",
-    "AddToGroup":  "AADGroupX",
     "Assign":  {
                    "IsPresent":  true
                },
-    "GroupTag":  "GroupTagXXX",
+    "GroupTag":  "hsstudent",
     "Hidden":  [
                    "AddToGroup",
                    "AssignedUser",
