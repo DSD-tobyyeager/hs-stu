@@ -111,6 +111,7 @@ $OOBECMD = @'
 start /Wait ms-settings:
 PowerShell -NoL -Com Set-ExecutionPolicy RemoteSigned -Force
 Set Path = %PATH%;C:\Program Files\WindowsPowerShell\Scripts
+Start /Wait PowerShell -NoL -C Set-Timezone "Central Standard Time"
 Start /Wait PowerShell -NoL -C Install-Module AutopilotOOBE -Force -Verbose
 Start /Wait PowerShell -NoL -C Start-OOBEDeploy
 '@
