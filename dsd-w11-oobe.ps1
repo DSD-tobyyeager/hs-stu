@@ -108,7 +108,7 @@ $AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.Autopi
 # Create OOBE.cmd
 Write-Host -ForegroundColor Green "Create C:\Windows\System32\OOBETasks.CMD"
 $OOBECMD = @'
-start /Wait ms-settings:
+start /Wait cmd.exe /k ms-settings:
 PowerShell -NoL -Com Set-ExecutionPolicy RemoteSigned -Force
 Set Path = %PATH%;C:\Program Files\WindowsPowerShell\Scripts
 Start /Wait PowerShell -NoL -C Set-Timezone "Central Standard Time"
