@@ -1,12 +1,12 @@
 #Variables to define the Windows OS / Edition etc to be applied during OSDCloud
-$OSName = 'Windows 11 23H2 x64'
+$OSName = 'Windows 11 24H2 x64'
 $OSEdition = 'Pro'
-$OSActivation = 'Volume'
+$OSActivation = 'Retail'
 $OSLanguage = 'en-us'
 
 #Set OSDCloud Vars
 $Global:MyOSDCloud = [ordered]@{
-    Restart = [bool]$False
+    Restart = [bool]$True
     RecoveryPartition = [bool]$true
     OEMActivation = [bool]$True
     WindowsUpdate = [bool]$true
@@ -31,7 +31,7 @@ $OOBEDeployJson = @'
                       "IsPresent":  true
                   },
     "Autopilot":  {
-                      "IsPresent":  true
+                      "IsPresent":  false
                   },
     "SetEdition":  "Enterprise",
     "RemoveAppx":  [
@@ -66,7 +66,7 @@ $OOBEDeployJson = @'
                           "IsPresent":  true
                       },
     "UpdateWindows":  {
-                          "IsPresent":  true
+                          "IsPresent":  false
                       }
 }
 '@
@@ -107,9 +107,27 @@ $AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.Autopi
 # Create OOBE.cmd
 Write-Host -ForegroundColor Green "Create C:\Windows\System32\OOBETasks.CMD"
 $OOBECMD = @'
+@Echo off
+set IPADDR=8.8.8.8
+REM set /p "pcname=Enter the Computer name: "
+REM set /p "grouptag=Enter the Group Tag: "
+ping 127.0.0.1 -n 2 >nul
+start ms-availablenetworks:
+:TEST
+ping %IPADDR% -n 1 | find "TTL=" >nul
+if errorlevel 1 (
+    goto RETRY
+) else (
+    goto DOSTUFF
+)
+:RETRY
+ping 127.0.0.1 -n 11 >nul
+goto TEST
+:DOSTUFF
 PowerShell -NoL -Com Set-ExecutionPolicy RemoteSigned -Force
 Set Path = %PATH%;C:\Program Files\WindowsPowerShell\Scripts
-Start /Wait PowerShell -NoL -C Install-Module AutopilotOOBE -Force -Verbose
+Start /Wait PowerShell -NoL -C Install-Module AutopilotOOBE -Force
+Start /Wait PowerShell -NoL -C Start-AutopilotOOBE
 Start /Wait PowerShell -NoL -C Start-OOBEDeploy
 '@
 $OOBECMD | Out-File -FilePath 'C:\Windows\System32\OOBE.CMD' -Encoding ascii -Force
