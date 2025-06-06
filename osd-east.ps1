@@ -31,6 +31,7 @@ $OOBECMD = @'
 @Echo off
 PowerShell -NoL -Com Set-ExecutionPolicy RemoteSigned -Force
 Set Path = %PATH%;C:\Program Files\WindowsPowerShell\Scripts
+Start /Wait PowerShell -NoL -C Install-Module AutopilotOOBE -Force
 Start /Wait PowerShell -NoL -C Start-OOBEDeploy
 '@
 $OOBECMD | Out-File -FilePath 'C:\Windows\System32\go.cmd' -Encoding ascii -Force
